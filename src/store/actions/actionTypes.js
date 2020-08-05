@@ -1,0 +1,20 @@
+import Axios from "axios";
+
+export const ADD_INGREDIENT = "ADD_INGREDIENT";
+export const REMOVE_INGREDIENT = "REMOVE_INGREDIENT";
+
+export const SET_INGREDIENTS = "SET_INGREDIENTS";
+
+export const FETCH_INGREDIENT_FAILED = "FETCH_INGREDIENT_FAILED";
+export const POST_BURGER_ORDER = "POST_BURGER_ORDER";
+
+export const BURGER_ORDER_SUCCESS = "BURGER_ORDER_SUCCESS";
+export const SET_LOADER = "SET_LOADER";
+export const PURCHASE_INIT = "PURCHASE_INIT";
+export const FETCH_ORDERS = "FETCH_ORDERS";
+export const SET_ORDERS = "SET_ORDERS";
+
+export const AUTH_START = "AUTH_START";
+export const AUTH_SUCCESS = "AUTH_SUCCESS";
+export const AUTH_FAIL = "AUTH_FAIL";
+export const AUTH_LOGOUT = "AUTH_LOGOUT";

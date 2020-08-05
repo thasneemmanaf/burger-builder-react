@@ -1,26 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Layout from "./components/Layout/Layout";
+import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
+import CheckOut from "./containers/CheckOut/CheckOut";
+import Orders from "./containers/Orders/Orders";
+import Auth from "./containers/Auth/Auth";
+import Logout from "./containers/Auth/Logout/Logout";
+import { Route, Switch, Redirect } from "react-router-dom";
+import * as actions from "./store/actions/index";
+import { connect } from "react-redux";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  // to auto sign in after refreshing the application
+  componentDidMount() {
+    this.props.onAutoSigninCheck();
+  }
+  render() {
+    let routes = (
+      <Switch>
+        <Route path="/" exact component={BurgerBuilder} />
+        <Route path="/auth" component={Auth} />
+        <Redirect to="/" />
+      </Switch>
+    );
+    if (this.props.isSignedIn) {
+      routes = (
+        <Switch>
+          <Route path="/" exact component={BurgerBuilder} />
+          <Route path="/checkout" component={CheckOut} />
+          <Route path="/orders" component={Orders} />
+          <Route path="/logout" component={Logout} />
+          <Redirect to="/" />
+        </Switch>
+      );
+    }
+
+    return (
+      <div>
+        <Layout>{routes}</Layout>
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    isSignedIn: state.rootAuth.tokenId != null,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAutoSigninCheck: () => dispatch(actions.autoSignIn()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
